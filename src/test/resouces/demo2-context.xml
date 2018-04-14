@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rpcaction="http://www.reliefzk.com/schema/rpcaction"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+         http://www.reliefzk.com/schema/rpcaction http://www.reliefzk.com/schema/rpcaction.xsd"
+       default-autowire="byName">
+
+    <context:annotation-config/>
+
+    <!-- 模块加载引擎 -->
+    <bean name="moduleLoader" class="com.alipay.jarslink.api.impl.ModuleLoaderImpl" />
+    <!-- 模块管理器 -->
+    <bean name="moduleManager" class="com.alipay.jarslink.api.impl.ModuleManagerImpl" />
+
+    <bean id="moduleRefreshScheduler" class="com.reliefzk.middleware.mds.demo.ModuleRefreshSchedulerImpl">
+        <property name="moduleManager" ref="moduleManager" />
+        <property name="moduleLoader" ref="moduleLoader" />
+        <property name="refreshDelay" value="10" />
+    </bean>
+
+    <bean class="com.reliefzk.middleware.mds.demo.DemoModuleLoader" id="demoModuleLoader">
+        <property name="moduleSchema" value="/Users/kui.zhouk/module.data"/>
+    </bean>
+
+
+    <!-- rpc module -->
+    <bean name="rpcModuleLoader" class="com.reliefzk.middleware.mds.jarslinkx.impl.RpcModuleLoaderImpl" />
+    <bean name="rpcModuleManager" class="com.reliefzk.middleware.mds.jarslinkx.impl.RpcModuleManagerImpl" />
+
+    <bean id="rpcModuleRefreshScheduler" class="com.reliefzk.middleware.mds.demo.RpcModuleRefreshSchedulerImpl">
+        <property name="rpcModuleLoader" ref="rpcModuleLoader" />
+        <property name="rpcModuleManager" ref="rpcModuleManager" />
+        <property name="refreshDelay" value="10" />
+    </bean>
+
+</beans>
