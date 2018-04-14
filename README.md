@@ -1,4 +1,4 @@
-# mds module deployment solustion
+# mds (module deployment solustion)
 
 基于蚂蚁金服微贷事业部开源jarslink进行二次开发，主要优化点在：原生实现的action方式为静态代理，本branch实现为动态代理，
 使客户端应用更直观。
